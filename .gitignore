@@ -241,4 +241,7 @@ pyrightconfig.json
 pyvenv.cfg
 pip-selfcheck.json
 
+### Media
+media/
+
 # End of https://www.toptal.com/developers/gitignore/api/virtualenv,macos,python,opencv,linux
