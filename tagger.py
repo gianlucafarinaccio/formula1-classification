@@ -1,9 +1,10 @@
 import cv2
 import json
 
-INPUT_VIDEO_FILE_PATH = "media/hamilton-reduced.mp4"
-TIMINGS_FILE_PATH = "hamilton-timing.json"
-MEDIA_FILE_PATH = "media/"
+INPUT_VIDEO_FILE_PATH = "media/leclerc-processed.mp4"
+DRIVER_NAME = "lec"
+TIMINGS_FILE_PATH = "leclerc-timing.json"
+OUTPUT_FILE_PATH = "data/"
 turns = ["prima-variante", "biassono", "seconda-variante","lesmo-uno", "lesmo-due", "ascari-uno", "ascari-due", "parabolica"]
 
 # 1. read json file 
@@ -31,10 +32,9 @@ while cap.isOpened():
 		print("Can't receive frame (stream end?). Exiting ...")
 		break
 
-
 	if (frame_count >= intervals[k][0]) and (frame_count <= intervals[k][1]):
-		frame_id = str(k) +'__' + str(frame_count)
-		path = MEDIA_FILE_PATH+turns[k]+'/'+frame_id+'.jpg'
+		frame_id = DRIVER_NAME +'__' +str(k) +'__' + str(frame_count)
+		path = OUTPUT_FILE_PATH+turns[k]+'/'+DRIVER_NAME+'/'+frame_id+'.jpg'
 		cv2.imwrite(path,frame)
 	
 	elif frame_count >= intervals[len(intervals)-1][1]:
@@ -43,11 +43,11 @@ while cap.isOpened():
 	elif frame_count >= intervals[k][1]:
 		k+=1
 
-
-
 	if cv2.waitKey(1) == ord('q'):
 		break
 
 	frame_count += 1
 cap.release()
 cv2.destroyAllWindows()
+
+

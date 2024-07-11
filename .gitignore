@@ -1,5 +1,19 @@
-# Created by https://www.toptal.com/developers/gitignore/api/virtualenv,macos,python,opencv,linux
-# Edit at https://www.toptal.com/developers/gitignore?templates=virtualenv,macos,python,opencv,linux
+# Created by https://www.toptal.com/developers/gitignore/api/linux,macos,opencv,python,virtualenv,jupyternotebooks
+# Edit at https://www.toptal.com/developers/gitignore?templates=linux,macos,opencv,python,virtualenv,jupyternotebooks
+
+### JupyterNotebooks ###
+# gitignore template for Jupyter Notebooks
+# website: http://jupyter.org/
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Remove previous ipynb_checkpoints
+#   git rm -r .ipynb_checkpoints/
 
 ### Linux ###
 *~
@@ -136,11 +150,8 @@ docs/_build/
 target/
 
 # Jupyter Notebook
-.ipynb_checkpoints
 
 # IPython
-profile_default/
-ipython_config.py
 
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is
@@ -241,7 +252,10 @@ pyrightconfig.json
 pyvenv.cfg
 pip-selfcheck.json
 
-### Media
-media/
 
-# End of https://www.toptal.com/developers/gitignore/api/virtualenv,macos,python,opencv,linux
+# Media and data
+media/
+data/
+
+
+# End of https://www.toptal.com/developers/gitignore/api/linux,macos,opencv,python,virtualenv,jupyternotebooks
