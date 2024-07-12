@@ -1,11 +1,25 @@
 import cv2
 import json
+import argparse
 
-INPUT_VIDEO_FILE_PATH = "media/leclerc-processed.mp4"
-DRIVER_NAME = "lec"
-TIMINGS_FILE_PATH = "leclerc-timing.json"
+INPUT_VIDEO_FILE_PATH = "media/"
 OUTPUT_FILE_PATH = "data/"
+DRIVER_NAME = ""
+TIMINGS_FILE_PATH = ""
 turns = ["prima-variante", "biassono", "seconda-variante","lesmo-uno", "lesmo-due", "ascari-uno", "ascari-due", "parabolica"]
+
+# Create the parser
+parser = argparse.ArgumentParser()
+parser.add_argument('--i', type=str, required=True)
+parser.add_argument('--o', type=str, required=True)
+parser.add_argument('--driver', type=str, required=True)
+parser.add_argument('--timings', type=str, required=True)
+args = parser.parse_args()
+
+INPUT_VIDEO_FILE_PATH = INPUT_VIDEO_FILE_PATH + args.i
+OUTPUT_VIDEO_FILE_PATH = OUTPUT_VIDEO_FILE_PATH + args.o
+DRIVER_NAME = args.driver
+TIMINGS_FILE_PATH = args.timings
 
 # 1. read json file 
 timings = {}

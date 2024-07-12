@@ -1,10 +1,25 @@
 import cv2
+import argparse
 
 # Percorso del video di input
-INPUT_VIDEO_FILE_PATH = "media/sainz.mp4"
+INPUT_VIDEO_FILE_PATH = "media/"
 
 # Percorso del video di output
-OUTPUT_VIDEO_FILE_PATH = "media/sainz-processed.mp4"
+OUTPUT_VIDEO_FILE_PATH = "media/"
+
+# Create the parser
+parser = argparse.ArgumentParser()
+parser.add_argument('--i', type=str, required=True)
+parser.add_argument('--o', type=str, required=True)
+args = parser.parse_args()
+
+INPUT_VIDEO_FILE_PATH = "media/" + args.i 
+OUTPUT_VIDEO_FILE_PATH = "media/" + args.o
+
+
+print('* input file: ' + INPUT_VIDEO_FILE_PATH)
+print('** output file: ' + OUTPUT_VIDEO_FILE_PATH)
+
 
 # Nuovi FPS desiderati
 new_fps = 25
@@ -63,4 +78,4 @@ while True:
 cap.release()
 out.release()
 
-print("Il video è stato salvato con i nuovi FPS correttamente.")
+print("*** Video processed ...")
