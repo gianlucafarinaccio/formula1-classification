@@ -49,8 +49,8 @@ frame_interval = int(original_fps / new_fps)
 print(frame_interval, original_fps)
 
 # Crea un oggetto VideoWriter per salvare il video con i nuovi FPS
-fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-out = cv2.VideoWriter(OUTPUT_VIDEO_FILE_PATH, fourcc, new_fps, OUTPUT_RESOLUTION)
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter(OUTPUT_VIDEO_FILE_PATH, fourcc, new_fps, OUTPUT_RESOLUTION, isColor = False)
 
 frame_count = 0
 
@@ -68,8 +68,8 @@ while True:
         cv2.rectangle(frame, (50,100), (180,120), (0,0,0), -1)
         cv2.rectangle(frame, (0,120), (224,224), (0,0,0), -1)
         frame = cv2.GaussianBlur(frame, (3, 3), 0)
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-        frame[..., 2] = cv2.subtract(frame[..., 2], 50)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        #frame[..., 2] = cv2.subtract(frame[..., 2], 50)
         out.write(frame)
 
     frame_count += 1

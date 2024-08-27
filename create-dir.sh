@@ -1,49 +1,18 @@
-cd data
+mkdir f1-monza-dataset
+cd f1-monza-dataset
+mkdir images
+cd images
+mkdir train
+mkdir test
+mkdir val
+
+cd train
 mkdir prima-variante biassono seconda-variante ascari-uno ascari-due lesmo-uno lesmo-due parabolica
-cd prima-variante
-mkdir ham 
-mkdir lec
-mkdir sai
-mkdir kimi
+
 cd ..
-cd biassono
-mkdir ham 
-mkdir lec
-mkdir sai
-mkdir kimi
+cd test
+mkdir prima-variante biassono seconda-variante ascari-uno ascari-due lesmo-uno lesmo-due parabolica
+
 cd ..
-cd seconda-variante
-mkdir ham 
-mkdir lec
-mkdir sai
-mkdir kimi
-cd ..
-cd ascari-uno
-mkdir ham 
-mkdir lec
-mkdir sai
-mkdir kimi
-cd ..
-cd ascari-due
-mkdir ham 
-mkdir lec
-mkdir sai
-mkdir kimi
-cd ..
-cd lesmo-uno
-mkdir ham 
-mkdir lec
-mkdir sai
-mkdir kimi
-cd ..
-cd lesmo-due
-mkdir ham 
-mkdir lec
-mkdir sai
-mkdir kimi
-cd ..
-cd parabolica
-mkdir ham 
-mkdir lec
-mkdir sai
-mkdir kimi
+cd val
+mkdir prima-variante biassono seconda-variante ascari-uno ascari-due lesmo-uno lesmo-due parabolica
