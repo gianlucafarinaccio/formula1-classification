@@ -1,7 +1,7 @@
 # f1.yaml
 
 # Dataset path (relative or absolute)
-path: ../f1-monza-dataset # Base path to the dataset directory
+path: /content/drive/MyDrive/dev/formula1-classification/f1-monza-dataset # Base path to the dataset directory
 
 train: images/train
 val: images/val

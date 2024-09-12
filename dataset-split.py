@@ -5,7 +5,7 @@ import shutil
 # Define paths
 dataset_path = 'f1-monza-dataset'
 images_path = os.path.join(dataset_path, 'images')
-turns = ["0-prima-variante", "1-biassono", "2-seconda-variante","3-lesmo-uno", "4-lesmo-due", "5-ascari-uno", "6-ascari-due", "7-parabolica"]
+turns = ["prima-variante", "biassono", "seconda-variante","lesmo-uno", "lesmo-due", "ascari-uno", "ascari-due", "parabolica"]
 
 
 # Train-test split ratio

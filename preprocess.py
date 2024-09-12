@@ -22,9 +22,9 @@ print('** output file: ' + OUTPUT_VIDEO_FILE_PATH)
 
 
 # Nuovi FPS desiderati
-new_fps = 25
+new_fps = 12.5
 
-OUTPUT_RESOLUTION = (224, 224)
+OUTPUT_RESOLUTION = (640, 640)
 
 # Crea un oggetto VideoCapture per leggere il video
 cap = cv2.VideoCapture(INPUT_VIDEO_FILE_PATH)
@@ -65,10 +65,11 @@ while True:
     # Seleziona i frame necessari in base all'intervallo calcolato
     if (frame_count % 2) == 0:
         frame = cv2.resize(frame, OUTPUT_RESOLUTION)
-        cv2.rectangle(frame, (50,100), (180,120), (0,0,0), -1)
-        cv2.rectangle(frame, (0,120), (224,224), (0,0,0), -1)
+        #cv2.rectangle(frame, (50,100), (180,120), (0,0,0), -1)
+        #cv2.rectangle(frame, (0,120), (224,224), (0,0,0), -1)
         frame = cv2.GaussianBlur(frame, (3, 3), 0)
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        #frame = cv2.bilateralFilter(frame,9,75,75)
+        #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         #frame[..., 2] = cv2.subtract(frame[..., 2], 50)
         out.write(frame)
 

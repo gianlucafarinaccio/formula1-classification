@@ -3,9 +3,9 @@ import json
 import argparse
 
 INPUT_VIDEO_FILE_PATH = "media/"
-OUTPUT_FILE_PATH = "data/"
+OUTPUT_FILE_PATH = "f1-monza-dataset/images/"
 DRIVER_NAME = ""
-TIMINGS_FILE_PATH = ""
+TIMINGS_FILE_PATH = "timings/"
 turns = ["prima-variante", "biassono", "seconda-variante","lesmo-uno", "lesmo-due", "ascari-uno", "ascari-due", "parabolica"]
 
 # Create the parser
@@ -17,7 +17,7 @@ args = parser.parse_args()
 
 INPUT_VIDEO_FILE_PATH = INPUT_VIDEO_FILE_PATH + args.i
 DRIVER_NAME = args.driver
-TIMINGS_FILE_PATH = args.timings
+TIMINGS_FILE_PATH = TIMINGS_FILE_PATH + args.timings
 
 # 1. read json file 
 timings = {}
@@ -46,7 +46,7 @@ while cap.isOpened():
 
 	if (frame_count >= intervals[k][0]) and (frame_count <= intervals[k][1]):
 		frame_id = DRIVER_NAME +'__' +str(k) +'__' + str(frame_count)
-		path = OUTPUT_FILE_PATH+turns[k]+'/'+DRIVER_NAME+'/'+frame_id+'.jpg'
+		path = OUTPUT_FILE_PATH+frame_id+'.jpg'
 		cv2.imwrite(path,frame)
 	
 	elif frame_count >= intervals[len(intervals)-1][1]:
