@@ -16,13 +16,9 @@ args = parser.parse_args()
 INPUT_VIDEO_FILE_PATH = "media/" + args.i
 OUTPUT_VIDEO_FILE_PATH = "media/" + args.o
 
-
 print('* input file: ' + INPUT_VIDEO_FILE_PATH)
 print('** output file: ' + OUTPUT_VIDEO_FILE_PATH)
 
-
-# Nuovi FPS desiderati
-new_fps = 12.5
 
 OUTPUT_RESOLUTION = (640, 640)
 
@@ -34,19 +30,12 @@ if not cap.isOpened():
     print("Errore nell'apertura del file video")
     exit()
 
-# Ottieni i parametri del video originale
-original_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-original_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
 original_fps = int(cap.get(cv2.CAP_PROP_FPS))
-
-print(original_fps)
-print(new_fps)
-print(int(original_fps/new_fps))
-
-# Calcola l'intervallo di frame da mantenere per ottenere i nuovi FPS
-frame_interval = int(original_fps / new_fps)
-
-print(frame_interval, original_fps)
+if(original_fps < 49):
+    frame_scaler = 1
+else:
+    frame_scaler = 2
 
 # Crea un oggetto VideoWriter per salvare il video con i nuovi FPS
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
@@ -63,14 +52,10 @@ while True:
         break
 
     # Seleziona i frame necessari in base all'intervallo calcolato
-    if (frame_count % 2) == 0:
+    if (frame_count % frame_scaler) == 0:
         frame = cv2.resize(frame, OUTPUT_RESOLUTION)
-        #cv2.rectangle(frame, (50,100), (180,120), (0,0,0), -1)
-        #cv2.rectangle(frame, (0,120), (224,224), (0,0,0), -1)
-        frame = cv2.GaussianBlur(frame, (3, 3), 0)
-        #frame = cv2.bilateralFilter(frame,9,75,75)
-        #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-        #frame[..., 2] = cv2.subtract(frame[..., 2], 50)
+        frame = cv2.bilateralFilter(frame,9,75,75)
+
         out.write(frame)
 
     frame_count += 1
@@ -80,3 +65,5 @@ cap.release()
 out.release()
 
 print("*** Video processed ...")
+
+

@@ -22,15 +22,15 @@ sky = np.array([[0,0],[0,40],[224,40],[224,0]])
 image = cv2.imread('media/ombre.png')
 image = cv2.resize(image, IMAGE_DIM)
 
+bil = cv2.bilateralFilter(image,9,75,75)
 
-# Applica la correzione gamma con un valore gamma (ad esempio, 2.2)
-gamma = adjust_gamma(np.copy(image), gamma=1.5)
+#aoi = np.ones(IMAGE_DIM, dtype=np.uint8)
+cv2.fillPoly(bil, [cockpit], 0)
+cv2.fillPoly(bil, [sky], 0)
+#aoi = aoi * 255
 
-hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
-
-cv2.imshow('hsv',hsv)
-cv2.imshow('gamma',gamma)
+cv2.imshow('bil',bil)
 cv2.imshow('image',image)
 
 
