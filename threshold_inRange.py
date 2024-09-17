@@ -1,6 +1,7 @@
 from __future__ import print_function
 import cv2 as cv
 import argparse
+import numpy as np
 
 max_value = 255
 max_value_H = 360//2
@@ -88,11 +89,18 @@ cv.createTrackbar(high_V_name, window_detection_name , high_V, max_value, on_hig
 ## [trackbar]
 
 frame = cv.imread('media/input.png')
+frame = cv.resize(frame, (224,224))
+
+cockpit = np.array([[0,224],[16,140],[55,101],[190,103],[224,140],[224,224]])
+sky = np.array([[0,0],[0,40],[224,40],[224,0]])
+cv.fillPoly(frame, [cockpit], 0)
+cv.fillPoly(frame, [sky], 0)
+
 
 while True:
     ## [while]
     #ret, frame = cap.read()
-    frame = cv.resize(frame, (224,224))
+
     if frame is None:
         break
 
