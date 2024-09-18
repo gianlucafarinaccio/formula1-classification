@@ -255,7 +255,6 @@ pip-selfcheck.json
 
 # Media and data
 media/
-data/
-f1-monza-dataset/
+dataset/
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,macos,opencv,python,virtualenv,jupyternotebooks

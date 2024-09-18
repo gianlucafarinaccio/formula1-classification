@@ -2,11 +2,11 @@ import cv2
 import json
 import argparse
 
-INPUT_VIDEO_FILE_PATH = "media/"
-OUTPUT_FILE_PATH = "f1-monza-dataset/images/"
+INPUT_VIDEO_FILE_PATH = "media/224_mask_no_filter/"
+OUTPUT_FILE_PATH = "f1-monza-dataset_224_mask_no_filter/images/"
 DRIVER_NAME = ""
 TIMINGS_FILE_PATH = "timings/"
-turns = ["prima-variante", "biassono", "seconda-variante","lesmo-uno", "lesmo-due", "ascari-uno", "ascari-due", "parabolica"]
+turns = ["neutro-zero","prima-variante", "neutro-uno","biassono","neutro-due" ,"seconda-variante","neutro-tre","lesmo-uno", "lesmo-due", "neutro-quattro","ascari-uno", "ascari-due", "neutro-cinque","parabolica", "neutro-sei"]
 
 # Create the parser
 parser = argparse.ArgumentParser()
@@ -36,6 +36,7 @@ for value in timings.values():
 
 frame_count = 0
 k = 0
+totals = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 while cap.isOpened():
 	ret, frame = cap.read()
 
@@ -47,6 +48,7 @@ while cap.isOpened():
 	if (frame_count >= intervals[k][0]) and (frame_count <= intervals[k][1]):
 		frame_id = DRIVER_NAME +'__' +str(k) +'__' + str(frame_count)
 		path = OUTPUT_FILE_PATH+frame_id+'.jpg'
+		totals[k] = totals[k] + 1 
 		cv2.imwrite(path,frame)
 	
 	elif frame_count >= intervals[len(intervals)-1][1]:
@@ -62,4 +64,10 @@ while cap.isOpened():
 cap.release()
 cv2.destroyAllWindows()
 
+with open("f1-monza-dataset_224_mask_no_filter/stats.txt", 'a') as file:
+	file.write(f'=============================\n\n')
+	file.write(f'driver name: {DRIVER_NAME}\n')
+	file.write(f'total frame: {frame_count}\n')
+	for i,e in enumerate(totals):
+		file.write(f'turn: {i} --> {e}\n')
 
