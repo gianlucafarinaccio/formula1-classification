@@ -6,7 +6,7 @@ import numpy as np
 INPUT_VIDEO_FILE_PATH = "media/"
 
 # Percorso del video di output
-OUTPUT_VIDEO_FILE_PATH = "media/"
+OUTPUT_VIDEO_FILE_PATH = "media/224_mask_no_filter"
 
 # Create the parser
 parser = argparse.ArgumentParser()

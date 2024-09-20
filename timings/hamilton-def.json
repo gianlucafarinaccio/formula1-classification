@@ -1,0 +1,77 @@
+{
+	"neutro-zero":{
+		"turn_name":"neutro-zero",
+		"id" : 0,
+		"interval": [0,6.0]
+	},
+	"prima-variante":{
+		"turn_name":"prima-variante",
+		"id" : 1,
+		"interval": [6.01,11.3]
+	},
+	"neutro-uno":{
+		"turn_name":"neutro-uno",
+		"id" : 2,
+		"interval": [11.31,16.0]
+	},	
+	"biassono":{
+		"turn_name":"biassono",
+		"id" : 3,
+		"interval":[16.01,21.90]
+	},
+	"neutro-due":{
+		"turn_name":"neutro-due",
+		"id" : 4,
+		"interval": [21.91,25.0]
+	},
+	"seconda-variante":{
+		"turn_name":"seconda-variante",
+		"id" : 5,
+		"interval":[25.01,29.5]
+	},
+	"neutro-tre":{
+		"turn_name":"neutro-tre",
+		"id" : 6,
+		"interval": [29.51,32.0]
+	},
+	"lesmo-uno":{
+		"turn_name":"lesmo-uno",
+		"id" : 7,
+		"interval":[32.01,36.80]
+	},
+	"lesmo-due":{
+		"turn_name":"lesmo-due",
+		"id" : 8,
+		"interval":[36.81,41.6]
+	},
+	"neutro-quattro":{
+		"turn_name":"neutro-quattro",
+		"id" : 9,
+		"interval": [41.61,51.0]
+	},
+	"ascari-uno":{
+		"turn_name":"ascari-uno",
+		"id" : 10,
+		"interval":[51.01,54.20]
+	},
+	"ascari-due":{
+		"turn_name":"ascari-due",
+		"id" : 11,
+		"interval":[54.21,56.30]
+	},
+	"neutro-cinque":{
+		"turn_name":"neutro-cinque",
+		"id" : 12,
+		"interval": [56.31,66.0]
+	},
+	"parabolica":{
+		"turn_name":"parabolica",
+		"id" : 13,
+		"interval":[66.01,72.70]
+	},
+	"neutro-sei":{
+		"turn_name":"neutro-sei",
+		"id" : 14,
+		"interval": [72.71,90]
+	}
+}

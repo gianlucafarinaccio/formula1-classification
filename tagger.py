@@ -3,7 +3,7 @@ import json
 import argparse
 
 INPUT_VIDEO_FILE_PATH = "media/224_mask_no_filter/"
-OUTPUT_FILE_PATH = "f1-monza-dataset_224_mask_no_filter/images/"
+OUTPUT_FILE_PATH = "f1-monza-dataset_224_mask_no_filter_v2/images/"
 DRIVER_NAME = ""
 TIMINGS_FILE_PATH = "timings/"
 turns = ["neutro-zero","prima-variante", "neutro-uno","biassono","neutro-due" ,"seconda-variante","neutro-tre","lesmo-uno", "lesmo-due", "neutro-quattro","ascari-uno", "ascari-due", "neutro-cinque","parabolica", "neutro-sei"]
@@ -64,7 +64,7 @@ while cap.isOpened():
 cap.release()
 cv2.destroyAllWindows()
 
-with open("f1-monza-dataset_224_mask_no_filter/stats.txt", 'a') as file:
+with open("f1-monza-dataset_224_mask_no_filter_v2/stats.txt", 'a') as file:
 	file.write(f'=============================\n\n')
 	file.write(f'driver name: {DRIVER_NAME}\n')
 	file.write(f'total frame: {frame_count}\n')
