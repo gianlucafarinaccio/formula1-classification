@@ -24,32 +24,46 @@ new_frame_time = 0
 IMAGE_DIM = (224,224)
 cockpit = np.array([[0,224],[16,140],[55,101],[190,103],[224,140],[224,224]])
 sky = np.array([[0,0],[0,40],[224,40],[224,0]])
-
-aoi = np.ones(IMAGE_DIM, dtype=np.uint8)
-cv2.fillPoly(aoi, [cockpit], 0)
-cv2.fillPoly(aoi, [sky], 0)
-aoi = aoi * 255
+aoi = np.array([[0,224],[224,224],[224,78],[160,60],[100,60],[0,132]])
 
 while cap.isOpened():
 	ret, image = cap.read()
 	image = cv2.resize(image, IMAGE_DIM)
+	#gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-	#gamma = adjust_gamma(np.copy(image), gamma=2.2)
+	edges = cv2.Canny(image,100,200)
+
+	cv2.fillPoly(edges, [cockpit], 0)
+	cv2.fillPoly(edges, [sky], 0)
+	lines = np.zeros((224,224),dtype = np.uint8)
+	cv2.fillPoly(lines, [aoi], 255)
+	edges = cv2.bitwise_and(edges, lines)
+	erosion_kernel = np.ones((3,3), np.uint8)
+	edges = cv2.dilate(edges, erosion_kernel, iterations = 1)
+
+	# # Step 4: Hough Transform to detect and connect lines
+	# rho = 1  # Distance resolution in pixels
+	# theta = np.pi / 180  # Angular resolution in radians
+	# threshold = 20  # Minimum number of votes in accumulator
+	# min_line_length = 30  # Minimum length of a line (in pixels) to be accepted
+	# max_line_gap = 20  # Maximum gap between segments to link them
+
+	# liness = cv2.HoughLinesP(edges, rho, theta, threshold, np.array([]), min_line_length, max_line_gap)
+
+	# # Create an image to draw the lines
+	# line_image = np.zeros((224,224), dtype = np.uint8)
+
+	# # Draw lines
+	# if liness is not None:
+	#     for line in liness:
+	#         for x1, y1, x2, y2 in line:
+	#             cv2.line(line_image, (x1, y1), (x2, y2), 255, 3)
 
 
-	gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-	#gray_image = cv2.GaussianBlur(gray_image, (3, 3), 0)
-
-	edges = cv2.Canny(gray_image,100,200)
-	mask = cv2.inRange(gray_image, 242, 255)
-
-	erosion_kernel = np.ones((5,5), np.uint8)
-	dilated = cv2.dilate(mask, erosion_kernel, iterations = 1)
-	cv2.fillPoly(dilated, [cockpit], 0)
-	cv2.fillPoly(dilated, [sky], 0)
-
-	dilated = cv2.cvtColor(dilated, cv2.COLOR_GRAY2BGR)
-	enh = cv2.addWeighted(image, 1, dilated, 1, 0)
+	# #res = cv2.bitwise_and(res, line_image)
+	# line_image = cv2.cvtColor(line_image, cv2.COLOR_GRAY2BGR)
+	edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR)
+	alls = cv2.addWeighted(image, 1, edges, 1, 0)
 
 	
 	# if frame is read correctly ret is True
@@ -59,7 +73,10 @@ while cap.isOpened():
 
 
 	if frame_count % 2 == 0:
-		cv2.imshow('Original Image', enh)
+		cv2.imshow('lines', lines)
+		cv2.imshow('original', image)
+		cv2.imshow('edges', edges)
+		cv2.imshow('lines', alls)
 
 
 	if cv2.waitKey(1) == ord('q'):

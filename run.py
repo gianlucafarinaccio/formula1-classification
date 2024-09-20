@@ -3,10 +3,10 @@ import cv2
 import numpy as np
 
 
-cap = cv2.VideoCapture('media/224_mask_no_filter/hamilton_224_mask_no_filter.mp4')
+cap = cv2.VideoCapture('media/224_mask_no_filter/bottas_224_mask_no_filter.mp4')
 
 frame_count = 0
-model = YOLO("best.pt")
+model = YOLO("models/224_mask_no_filter_v2.pt")
 
 cockpit = np.array([[0,224],[16,140],[55,101],[190,103],[224,140],[224,224]])
 sky = np.array([[0,0],[0,40],[224,40],[224,0]])
