@@ -3,7 +3,7 @@ import random
 import shutil
 
 # Define paths
-dataset_path = 'f1-monza-dataset_224_mask_no_filter_v2'
+dataset_path = 'f1-monza-dataset_224_mask_with_filter_v2'
 images_path = os.path.join(dataset_path, 'images')
 turns = ["neutro-zero","prima-variante", "neutro-uno","biassono","neutro-due" ,"seconda-variante","neutro-tre","lesmo-uno", "lesmo-due", "neutro-quattro","ascari-uno", "ascari-due", "neutro-cinque","parabolica", "neutro-sei"]
 
