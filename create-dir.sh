@@ -1,5 +1,5 @@
-mkdir f1-monza-dataset_224_mask_no_filter_v2
-cd f1-monza-dataset_224_mask_no_filter_v2
+mkdir f1-monza-dataset_224_mask_with_filter_v2
+cd f1-monza-dataset_224_mask_with_filter_v2
 mkdir images
 cd images
 mkdir train

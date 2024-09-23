@@ -48,6 +48,7 @@ frame_count = 0
 
 cockpit = np.array([[0,224],[16,140],[55,101],[190,103],[224,140],[224,224]])
 sky = np.array([[0,0],[0,40],[224,40],[224,0]])
+aoi = np.array([[0,224],[224,224],[224,78],[160,48],[100,48],[0,132]])
 
 while True:
     # Leggi un frame dal video
@@ -62,10 +63,64 @@ while True:
         frame = cv2.resize(frame, OUTPUT_RESOLUTION)
         #frame = cv2.bilateralFilter(frame,9,75,75)
 
-        cv2.fillPoly(frame, [cockpit], 0)
-        cv2.fillPoly(frame, [sky], 0)
+       # Step 2: Convert to Grayscale and apply gaussian blurring
+        gray_image = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        #gray_image = cv2.GaussianBlur(gray_image, (3, 3), 0)
 
-        out.write(frame)
+        # Step 3: Highlight edges and select only white pixels
+        edges = cv2.Canny(gray_image,100,200)
+        mask = cv2.inRange(gray_image, 242, 255)
+
+        # Step 4: Create a mask for my 'area of interest'
+        #aoi = np.ones(IMAGE_DIM, dtype=np.uint8)
+        # cv2.fillPoly(aoi, [cockpit], 0)
+        # cv2.fillPoly(aoi, [sky], 0)
+        # aoi = aoi * 255
+
+        # Step 5: Dilate the all white pixels found
+        erosion_kernel = np.ones((5,5), np.uint8)
+        dilated = cv2.dilate(mask, erosion_kernel, iterations = 1)
+        cv2.fillPoly(dilated, [cockpit], 0)
+        cv2.fillPoly(dilated, [sky], 0)
+
+
+        cv2.fillPoly(edges, [cockpit], 0)
+        cv2.fillPoly(edges, [sky], 0)
+        lines = np.zeros((224,224),dtype = np.uint8)
+        cv2.fillPoly(lines, [aoi], 255)
+        edges = cv2.bitwise_and(edges, lines)
+
+
+        dilated = cv2.cvtColor(dilated, cv2.COLOR_GRAY2BGR)
+        enh = cv2.addWeighted(frame, 1, dilated, 1, 0)
+
+
+        edges_and_mask = cv2.bitwise_and(edges, mask)
+
+        # Step 4: Hough Transform to detect and connect lines
+        rho = 1  # Distance resolution in pixels
+        theta = np.pi / 180  # Angular resolution in radians
+        threshold = 20  # Minimum number of votes in accumulator
+        min_line_length = 50  # Minimum length of a line (in pixels) to be accepted
+        max_line_gap = 10  # Maximum gap between segments to link them
+
+        liness = cv2.HoughLinesP(edges, rho, theta, threshold, np.array([]), min_line_length, max_line_gap)
+
+        # Create an image to draw the lines
+        line_image = np.zeros((224,224), dtype = np.uint8)
+
+        # Draw lines
+        if liness is not None:
+            for line in liness:
+                for x1, y1, x2, y2 in line:
+                    cv2.line(line_image, (x1, y1), (x2, y2), 255, 3)
+
+
+        #res = cv2.bitwise_and(res, line_image)
+        line_image = cv2.cvtColor(line_image, cv2.COLOR_GRAY2BGR)
+        alls = cv2.addWeighted(frame, 1, line_image, 1, 0)
+
+        out.write(alls)
 
     frame_count += 1
 
