@@ -1,0 +1,79 @@
+
+Canny + Hough 
+
+=============================
+
+driver name: hamilton
+total frame: 1866
+turn: 0 --> 151
+turn: 1 --> 131
+turn: 2 --> 117
+turn: 3 --> 146
+turn: 4 --> 77
+turn: 5 --> 111
+turn: 6 --> 62
+turn: 7 --> 118
+turn: 8 --> 120
+turn: 9 --> 234
+turn: 10 --> 79
+turn: 11 --> 51
+turn: 12 --> 242
+turn: 13 --> 166
+turn: 14 --> 47
+=============================
+
+driver name: leclerc
+total frame: 1898
+turn: 0 --> 156
+turn: 1 --> 126
+turn: 2 --> 117
+turn: 3 --> 149
+turn: 4 --> 74
+turn: 5 --> 116
+turn: 6 --> 76
+turn: 7 --> 120
+turn: 8 --> 124
+turn: 9 --> 231
+turn: 10 --> 79
+turn: 11 --> 57
+turn: 12 --> 234
+turn: 13 --> 174
+turn: 14 --> 51
+=============================
+
+driver name: kimi
+total frame: 1876
+turn: 0 --> 143
+turn: 1 --> 144
+turn: 2 --> 109
+turn: 3 --> 149
+turn: 4 --> 77
+turn: 5 --> 116
+turn: 6 --> 69
+turn: 7 --> 119
+turn: 8 --> 122
+turn: 9 --> 229
+turn: 10 --> 71
+turn: 11 --> 54
+turn: 12 --> 237
+turn: 13 --> 174
+turn: 14 --> 49
+=============================
+
+driver name: sainz
+total frame: 1900
+turn: 0 --> 151
+turn: 1 --> 131
+turn: 2 --> 117
+turn: 3 --> 149
+turn: 4 --> 74
+turn: 5 --> 116
+turn: 6 --> 64
+turn: 7 --> 129
+turn: 8 --> 127
+turn: 9 --> 231
+turn: 10 --> 74
+turn: 11 --> 57
+turn: 12 --> 236
+turn: 13 --> 182
+turn: 14 --> 48
