@@ -24,6 +24,7 @@ image = cv2.imread('media/input.png')
 image = cv2.resize(image, IMAGE_DIM)
 
 
+
 # Applica la correzione gamma con un valore gamma (ad esempio, 2.2)
 # gamma = adjust_gamma(np.copy(image), gamma=2.2)
 
@@ -38,9 +39,34 @@ image = cv2.resize(image, IMAGE_DIM)
 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 #gray_image = cv2.GaussianBlur(gray_image, (3, 3), 0)
 
-# Step 3: Highlight edges and select only white pixels
-edges = cv2.Canny(gray_image,100,200)
-mask = cv2.inRange(gray_image, 242, 255)
+edges = cv2.Canny(image,100,200)
+
+# Step 3: Define the color range and threshold the HSV image
+# Example for detecting red color
+"""
+Determine and cut the region of interest in the input image.
+Parameters:
+    image: we pass here the output from canny where we have 
+    identified edges in the frame
+"""
+# create an array of the same size as of the input image 
+mask = np.zeros_like(edges) 
+# if you pass an image with more then one channel
+if len(edges.shape) > 2:
+    channel_count = edges.shape[2]
+    ignore_mask_color = (255,) * channel_count
+# our image only has one channel so it will go under "else"
+else:
+    # color of the mask polygon (white)
+    ignore_mask_color = 255
+# creating a polygon to focus only on the road in the picture
+# we have created this polygon in accordance to how the camera was placed
+
+vertices = np.array([[0,224],[16,140],[55,101],[190,103],[224,140],[224,224]])
+# filling the polygon with white color and generating the final mask
+cv2.fillPoly(mask, [vertices], ignore_mask_color)
+mask = cv2.bitwise_not(mask)
+
 
 # Step 4: Create a mask for my 'area of interest'
 #aoi = np.ones(IMAGE_DIM, dtype=np.uint8)
@@ -75,7 +101,7 @@ threshold = 20  # Minimum number of votes in accumulator
 min_line_length = 50  # Minimum length of a line (in pixels) to be accepted
 max_line_gap = 10  # Maximum gap between segments to link them
 
-liness = cv2.HoughLinesP(edges, rho, theta, threshold, np.array([]), min_line_length, max_line_gap)
+liness = cv2.HoughLinesP(edges_and_mask, rho, theta, threshold, np.array([]), min_line_length, max_line_gap)
 
 # Create an image to draw the lines
 line_image = np.zeros((224,224), dtype = np.uint8)
@@ -87,14 +113,20 @@ if liness is not None:
             cv2.line(line_image, (x1, y1), (x2, y2), 255, 3)
 
 
-#res = cv2.bitwise_and(res, line_image)
+# Applica l'operazione bitwise_and
+#masked_image = cv2.addWeighted(image,1, mask,1,0)
 line_image = cv2.cvtColor(line_image, cv2.COLOR_GRAY2BGR)
+mask = cv2.cvtColor(mask,cv2.COLOR_GRAY2BGR)
 alls = cv2.addWeighted(image, 1, line_image, 1, 0)
+
+masked_image = cv2.bitwise_and(alls,mask)
+
 
 
 cv2.imshow('original', image)
-cv2.imshow('edges', edges)
-cv2.imshow('lines', alls)
+cv2.imshow("edges_and_mask",edges_and_mask)
+cv2.imshow('masked_image', masked_image)
+cv2.imshow('line_image', line_image)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()

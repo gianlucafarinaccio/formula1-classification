@@ -94,5 +94,6 @@ cv2.imshow("masked_edges2",masked_edges2)
 cv2.imshow('masked Image', masked_image)
 cv2.imshow('combined_image', combined_image)
 cv2.imshow('output_image',output_image)
+
 cv2.waitKey(0)
 cv2.destroyAllWindows()
