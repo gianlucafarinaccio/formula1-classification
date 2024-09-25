@@ -6,7 +6,7 @@ import numpy as np
 INPUT_VIDEO_FILE_PATH = "media/"
 
 # Percorso del video di output
-OUTPUT_VIDEO_FILE_PATH = "media/224_mask_no_filter"
+OUTPUT_VIDEO_FILE_PATH = "media/224_hist"
 
 # Create the parser
 parser = argparse.ArgumentParser()
@@ -15,7 +15,7 @@ parser.add_argument('--o', type=str, required=True)
 args = parser.parse_args()
 
 INPUT_VIDEO_FILE_PATH = "media/" + args.i
-OUTPUT_VIDEO_FILE_PATH = "media/" + args.o
+OUTPUT_VIDEO_FILE_PATH = "media/224_hist/" + args.o
 
 print('* input file: ' + INPUT_VIDEO_FILE_PATH)
 print('** output file: ' + OUTPUT_VIDEO_FILE_PATH)
@@ -60,67 +60,89 @@ while True:
 
     # Seleziona i frame necessari in base all'intervallo calcolato
     if (frame_count % frame_scaler) == 0:
-        frame = cv2.resize(frame, OUTPUT_RESOLUTION)
-        #frame = cv2.bilateralFilter(frame,9,75,75)
+        image = cv2.resize(frame, OUTPUT_RESOLUTION)
 
-       # Step 2: Convert to Grayscale and apply gaussian blurring
-        gray_image = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        #gray_image = cv2.GaussianBlur(gray_image, (3, 3), 0)
+        hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
-        # Step 3: Highlight edges and select only white pixels
-        edges = cv2.Canny(gray_image,100,200)
-        mask = cv2.inRange(gray_image, 242, 255)
+        # Estrai il canale H (Hue)
+        h_channel = hsv_image[:, :, 2]
 
-        # Step 4: Create a mask for my 'area of interest'
-        #aoi = np.ones(IMAGE_DIM, dtype=np.uint8)
-        # cv2.fillPoly(aoi, [cockpit], 0)
-        # cv2.fillPoly(aoi, [sky], 0)
-        # aoi = aoi * 255
+        # Scala il canale H da [0, 179] a [0, 255]
+        h_scaled = cv2.normalize(h_channel, None, 0, 255, cv2.NORM_MINMAX)
 
-        # Step 5: Dilate the all white pixels found
-        erosion_kernel = np.ones((5,5), np.uint8)
-        dilated = cv2.dilate(mask, erosion_kernel, iterations = 1)
-        cv2.fillPoly(dilated, [cockpit], 0)
-        cv2.fillPoly(dilated, [sky], 0)
+        # Applica l'equalizzazione dell'istogramma
+        h_equalized = cv2.equalizeHist(h_scaled)
 
+        # Scala nuovamente il canale H equalizzato da [0, 255] a [0, 179]
+        h_equalized_scaled = cv2.normalize(h_equalized, None, 0, 179, cv2.NORM_MINMAX)
 
-        cv2.fillPoly(edges, [cockpit], 0)
-        cv2.fillPoly(edges, [sky], 0)
-        lines = np.zeros((224,224),dtype = np.uint8)
-        cv2.fillPoly(lines, [aoi], 255)
-        edges = cv2.bitwise_and(edges, lines)
+        # Sostituisci il canale H equalizzato nell'immagine HSV
+        hsv_image[:, :, 2] = h_equalized_scaled
 
+        # Converti l'immagine HSV modificata nuovamente a BGR
+        equalized_image = cv2.cvtColor(hsv_image, cv2.COLOR_HSV2BGR)
+        cv2.fillPoly(equalized_image, [cockpit], 0)
+        cv2.fillPoly(equalized_image, [sky], 0)
+        out.write(equalized_image)
 
-        dilated = cv2.cvtColor(dilated, cv2.COLOR_GRAY2BGR)
-        enh = cv2.addWeighted(frame, 1, dilated, 1, 0)
+       # # Step 2: Convert to Grayscale and apply gaussian blurring
+       #  gray_image = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+       #  #gray_image = cv2.GaussianBlur(gray_image, (3, 3), 0)
 
+       #  # Step 3: Highlight edges and select only white pixels
+       #  edges = cv2.Canny(gray_image,100,200)
+       #  mask = cv2.inRange(gray_image, 242, 255)
 
-        edges_and_mask = cv2.bitwise_and(edges, mask)
+       #  # Step 4: Create a mask for my 'area of interest'
+       #  #aoi = np.ones(IMAGE_DIM, dtype=np.uint8)
+       #  # cv2.fillPoly(aoi, [cockpit], 0)
+       #  # cv2.fillPoly(aoi, [sky], 0)
+       #  # aoi = aoi * 255
 
-        # Step 4: Hough Transform to detect and connect lines
-        rho = 1  # Distance resolution in pixels
-        theta = np.pi / 180  # Angular resolution in radians
-        threshold = 20  # Minimum number of votes in accumulator
-        min_line_length = 50  # Minimum length of a line (in pixels) to be accepted
-        max_line_gap = 10  # Maximum gap between segments to link them
-
-        liness = cv2.HoughLinesP(edges, rho, theta, threshold, np.array([]), min_line_length, max_line_gap)
-
-        # Create an image to draw the lines
-        line_image = np.zeros((224,224), dtype = np.uint8)
-
-        # Draw lines
-        if liness is not None:
-            for line in liness:
-                for x1, y1, x2, y2 in line:
-                    cv2.line(line_image, (x1, y1), (x2, y2), 255, 3)
+       #  # Step 5: Dilate the all white pixels found
+       #  erosion_kernel = np.ones((5,5), np.uint8)
+       #  dilated = cv2.dilate(mask, erosion_kernel, iterations = 1)
+       #  cv2.fillPoly(dilated, [cockpit], 0)
+       #  cv2.fillPoly(dilated, [sky], 0)
 
 
-        #res = cv2.bitwise_and(res, line_image)
-        line_image = cv2.cvtColor(line_image, cv2.COLOR_GRAY2BGR)
-        alls = cv2.addWeighted(frame, 1, line_image, 1, 0)
+       #  cv2.fillPoly(edges, [cockpit], 0)
+       #  cv2.fillPoly(edges, [sky], 0)
+       #  lines = np.zeros((224,224),dtype = np.uint8)
+       #  cv2.fillPoly(lines, [aoi], 255)
+       #  edges = cv2.bitwise_and(edges, lines)
 
-        out.write(alls)
+
+       #  dilated = cv2.cvtColor(dilated, cv2.COLOR_GRAY2BGR)
+       #  enh = cv2.addWeighted(frame, 1, dilated, 1, 0)
+
+
+       #  edges_and_mask = cv2.bitwise_and(edges, mask)
+
+       #  # Step 4: Hough Transform to detect and connect lines
+       #  rho = 1  # Distance resolution in pixels
+       #  theta = np.pi / 180  # Angular resolution in radians
+       #  threshold = 20  # Minimum number of votes in accumulator
+       #  min_line_length = 50  # Minimum length of a line (in pixels) to be accepted
+       #  max_line_gap = 10  # Maximum gap between segments to link them
+
+       #  liness = cv2.HoughLinesP(edges, rho, theta, threshold, np.array([]), min_line_length, max_line_gap)
+
+       #  # Create an image to draw the lines
+       #  line_image = np.zeros((224,224), dtype = np.uint8)
+
+       #  # Draw lines
+       #  if liness is not None:
+       #      for line in liness:
+       #          for x1, y1, x2, y2 in line:
+       #              cv2.line(line_image, (x1, y1), (x2, y2), 255, 3)
+
+
+       #  #res = cv2.bitwise_and(res, line_image)
+       #  line_image = cv2.cvtColor(line_image, cv2.COLOR_GRAY2BGR)
+       #  alls = cv2.addWeighted(frame, 1, line_image, 1, 0)
+
+       #  out.write(alls)
 
     frame_count += 1
 
