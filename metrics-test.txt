@@ -1,0 +1,17 @@
+Metrics for test
+
+[ascari-due] -- precision: 0.9795918367346939 , recall: 1.0, f1: 0.9896907216494846
+[ascari-uno] -- precision: 0.9482758620689655 , recall: 0.9821428571428571, f1: 0.9649122807017544
+[biassono] -- precision: 0.9916666666666667 , recall: 0.9916666666666667, f1: 0.9916666666666667
+[lesmo-due] -- precision: 0.95 , recall: 1.0, f1: 0.9743589743589743
+[lesmo-uno] -- precision: 0.9484536082474226 , recall: 0.9787234042553191, f1: 0.963350785340314
+[neutro-cinque] -- precision: 0.9948186528497409 , recall: 1.0, f1: 0.9974025974025974
+[neutro-due] -- precision: 0.9811320754716981 , recall: 1.0, f1: 0.9904761904761905
+[neutro-quattro] -- precision: 0.994475138121547 , recall: 0.9625668449197861, f1: 0.9782608695652174
+[neutro-sei] -- precision: 1.0 , recall: 0.9, f1: 0.9473684210526316
+[neutro-tre] -- precision: 1.0 , recall: 0.8571428571428571, f1: 0.923076923076923
+[neutro-uno] -- precision: 0.8962264150943396 , recall: 0.9895833333333334, f1: 0.9405940594059405
+[neutro-zero] -- precision: 1.0 , recall: 0.990909090909091, f1: 0.995433789954338
+[parabolica] -- precision: 0.9811320754716981 , recall: 1.0, f1: 0.9904761904761905
+[prima-variante] -- precision: 0.989010989010989 , recall: 0.9, f1: 0.9424083769633509
+[seconda-variante] -- precision: 0.9805825242718447 , recall: 0.9901960784313726, f1: 0.9853658536585367
