@@ -1,0 +1,20 @@
+Metrics for 224_with_filter
+
+[ascari-due] -- precision: 0.975609756097561 , recall: 0.9302325581395349, f1: 0.9523809523809524
+[ascari-uno] -- precision: 1.0 , recall: 0.948051948051948, f1: 0.9733333333333333
+[biassono] -- precision: 1.0 , recall: 0.9572649572649573, f1: 0.9781659388646288
+[lesmo-due] -- precision: 0.96875 , recall: 0.8942307692307693, f1: 0.93
+[lesmo-uno] -- precision: 0.9142857142857143 , recall: 0.9896907216494846, f1: 0.9504950495049506
+[neutro-cinque] -- precision: 0.9849246231155779 , recall: 0.9949238578680203, f1: 0.9898989898989898
+[neutro-due] -- precision: 0.9473684210526315 , recall: 0.9818181818181818, f1: 0.9642857142857142
+[neutro-quattro] -- precision: 0.9695431472081218 , recall: 1.0, f1: 0.9845360824742267
+[neutro-sei] -- precision: 1.0 , recall: 1.0, f1: 1.0
+[neutro-tre] -- precision: 1.0 , recall: 0.9841269841269841, f1: 0.9919999999999999
+[neutro-uno] -- precision: 0.9878048780487805 , recall: 0.9878048780487805, f1: 0.9878048780487805
+[neutro-zero] -- precision: 1.0 , recall: 0.9914529914529915, f1: 0.9957081545064378
+[parabolica] -- precision: 0.9917355371900827 , recall: 1.0, f1: 0.995850622406639
+[prima-variante] -- precision: 0.989247311827957 , recall: 0.989247311827957, f1: 0.989247311827957
+[seconda-variante] -- precision: 0.9809523809523809 , recall: 1.0, f1: 0.9903846153846153
+macro-precision: 0.9806814513185872
+macro-recall: 0.9765896772986407
+macro-f1: 0.9786312872786241

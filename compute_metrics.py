@@ -71,6 +71,7 @@ confusion_df = pd.DataFrame(confusion_matrix)
 # Show the reshaped confusion matrix
 print('input confusion matrix ========================\n')
 print(confusion_df)
+print(f'total: {confusion_df.sum().sum()}')
 print('\n==============================================\n')
 
 sectors = ['ascari-due', 'ascari-uno', 'biassono', 'lesmo-due', 'lesmo-uno', 'neutro-cinque', 'neutro-due', 'neutro-quattro', 'neutro-sei', 'neutro-tre', 'neutro-uno', 'neutro-zero', 'parabolica', 'prima-variante', 'seconda-variante']
