@@ -60,7 +60,9 @@ def compute_f1(precision, recall):
 
 row_data = pd.read_csv(args.data, header=None).values[0]
 
-# Reshape the row data into a 14x14 matrix
+# Reshape the row data into a 15x15 matrix
+# Confusion matrix in input is a one row shape 
+# reshape to nxn, where n is number of my classes
 confusion_matrix = row_data.reshape(15, 15)
 
 # Convert to a DataFrame for better readability
@@ -76,21 +78,41 @@ precision = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 recall = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 f1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
+# Compute precision, recall and f1 for all classes
 i = 0
 for i in range(15):
 	precision[i] = compute_precision(confusion_df, i)
 	recall[i] = compute_recall(confusion_df, i)
 	f1[i] = compute_f1(precision[i], recall[i])
 
+
+# Compute macro precision, recall and f1
+macro_precision = 0
+macro_recall = 0
+i = 0
+for i in range(15):
+	macro_precision += precision[i]
+	macro_recall += recall[i]
+
+macro_precision = macro_precision/15	
+macro_recall = macro_recall/15
+macro_f1 = compute_f1(macro_precision, macro_recall)
+
 print(f'precision: {precision}')
 print(f'recall: {recall}')
 print(f'f1: {f1}')
+print('+++++++++++++++++++++++++++++++++++++')
+print(f'macro-precision: {macro_precision}')
+print(f'macro-recall: {macro_recall}')
+print(f'macro-f1: {macro_f1}')
 
 with open(f"metrics-{args.name}.txt", 'a') as file:
 	file.write(f'Metrics for {args.name}\n\n')
 	for i in range(15):
 		file.write(f'[{sectors[i]}] -- precision: {precision[i]} , recall: {recall[i]}, f1: {f1[i]}\n')
-
+	file.write(f'macro-precision: {macro_precision}\n')
+	file.write(f'macro-recall: {macro_recall}\n')
+	file.write(f'macro-f1: {macro_f1}\n')
 
 
 
